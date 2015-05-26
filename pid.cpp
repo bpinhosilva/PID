@@ -62,6 +62,22 @@ void PID::init() {
   u[0] = u[1] = e[0] = e[1] = e[2] = 0;
 }
 
+void PID::setDeadTime(float d) {
+	this->d = d;
+}
+
+float PID::getDeadTime() {
+	return this->d;
+}
+
+void PID::setResponseTime(float T) {
+	this->T = T;
+}
+
+float PID::getResponseTime() {
+	return this->T;
+}
+
 // update the setpoint or reference
 void PID::setReference(float ref) {
   this->ref = ref;

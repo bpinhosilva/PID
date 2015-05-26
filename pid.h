@@ -23,7 +23,7 @@
 
 #include "Arduino.h"
 
-// controller type to use
+// controller type enumeration
 enum controllerType {
   _P,
   _PI,
@@ -32,17 +32,17 @@ enum controllerType {
 
 class PID {
 private:
-  enum  controllerType cType; // type of controller default PID
+  enum  controllerType cType; // type of controller (default PID)
 	
-  float d;   // controller parameter from curve after unit step input applied
-  float T;   // controller parameter from curve after unit step input applied
+  float d;   // controller parameter -> dead time
+  float T;   // controller parameter -> response time
 
   float Kp;  // proportional gain  
   float Ti;  // integral time
   float Td;  // derivative time
   float T0;  // sampling time
 
-  float q0;  // controler parameters calculated first
+  float q0;  // controler parameters (calculated)
   float q1;
   float q2;
 
@@ -55,13 +55,17 @@ private:
   int maxValue;
 
 public:
-  PID ();
-  PID (float d, float T, float T0, float ref, enum controllerType cType);	
-  void init();
-  void setReference(float ref);
+  PID();
+  PID(float d, float T, float T0, float ref, enum controllerType cType);	
+  void	init();
+  void	setDeadTime(float d);
+  float	getDeadTime();
+  void  setResponseTime(float T);
+  float getResponseTime();
+  void  setReference(float ref);
   float getReference();
-  void setLimits(int min, int max);
-  float control(float procOutput);
+  void  setLimits(int min, int max);
+  float	control(float procOutput);
   float getOutputControl();
   float getMappedOutputControl(int fromLow, int fromHigh, int toLow, int toHigh);
 };

@@ -36,5 +36,5 @@ void loop() {
   // send the process variable as input to controller
   float output = mypid.control(analogRead(0));
   Serial.println(output);
-  delay(30);
+  delay(30);	// it's better utilizing timers for more accurate timing
 }
