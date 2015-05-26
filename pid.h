@@ -38,8 +38,8 @@ private:
   float T;   // controller parameter from curve after unit step input applied
 
   float Kp;  // proportional gain  
-	float Ti;  // integral time
-	float Td;  // derivative time
+  float Ti;  // integral time
+  float Td;  // derivative time
   float T0;  // sampling time
 
   float q0;  // controler parameters calculated first
@@ -55,7 +55,7 @@ private:
   int maxValue;
 
 public:
-	PID (float d, float T, float T0, float ref, enum controllerType);	
+  PID (float d, float T, float T0, float ref, enum controllerType);	
   void init();
   void setReference(float ref);
   float getReference();
