@@ -23,32 +23,46 @@
 
 #include "Arduino.h"
 
+// controller type to use
+enum controllerType {
+  P,
+  PI,
+  PID
+};
+
 class PID {
 private:
-	float kp;
-	float ki;
-	float kd;
+  enum  controllerType cType; // type of controller default PID
+	
+  float d;   // controller parameter from curve after unit step input applied
+  float T;   // controller parameter from curve after unit step input applied
 
-	float setpoint;
-	float sensorData;
+  float Kp;  // proportional gain  
+	float Ti;  // integral time
+	float Td;  // derivative time
+  float T0;  // sampling time
 
-	float error;
-	float error_prev;
+  float q0;  // controler parameters calculated first
+  float q1;
+  float q2;
 
-	float integral;
-	float derivative;
+  float u[2]; // controlled value
+  float e[3]; // error
 
-	float output;
+  float ref = 0.0;  // reference or setpoint
 
-	float dt;
+  int minValue;
+  int maxValue;
 
 public:
-	PID ();
-	PID (float kp, float ki, float kd);
-	void setParams(float kp, float ki, float kd);
-
-	void control ();
-
+	PID (float d, float T, float T0, float ref, enum controllerType);	
+  void init();
+  void setReference(float ref);
+  float getReference();
+  void setLimits(int min, int max);
+  float control(float procOutput);
+  float getOutputControl();
+  float getMappedOutputControl(int fromLow, int fromHigh, int toLow, int toHigh);
 };
 
 #endif

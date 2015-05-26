@@ -23,24 +23,87 @@
 
 // PID constructor
 PID::PID() {
-	
+	this->cType = PID; // default is PID
 }
 
-PID::PID(float kp, float ki, float kd) {
-	
+PID::PID (float d, float T, float T0, float ref, enum controllerType ctype) {
+  this->d     = d;
+  this->T     = T;
+  this->T0    = T0;
+  this->ref   = ref;
+  this->cType = cType;
 }
 
-void PID::setParams(float kp, float ki, float kd) {
-	this->kp = kp;
-	this->ki = ki;
-	this->kd = kd;
+// initialize controller
+void PID::init() {
+
+  switch(this->cType) {
+    case P:
+      Kp = T / d;
+      Ti = INFINITY;
+      Td = 0.0;
+      break;
+    case PI:
+      Kp = 0.9 * T / d;
+      Ti = d / 0.3;
+      Td = 0.0;
+      break;
+    case PID:
+    default:
+      Kp = 1.2 * T / d;
+      Ti = 2 * d;
+      Td = 0.5 * d;
+  }
+
+  q0 =  Kp * (1 + (Td / T0));
+  q1 = -Kp * (1 + 2 * (Td / T0) - (T0 / Ti));
+  q2 =  Kp * Td / T0;
+
+  u[0] = u[1] = e[0] = e[1] = e[2] = 0;
 }
 
-void PID::control () {
-	error       = setpoint - sensorData;
-	integral    = integral + error*dt;
-	derivative  = (error - error_prev)/dt;
-	output      = kp * error + ki * integral + kd * derivative;
-	error_prev  = error;
-	//delay(dt); 
+// update the setpoint or reference
+void PID::setReference(float ref) {
+  this->ref = ref;
+}
+
+float PID::getReference() {
+  return this->ref;
+}
+
+// set the filter for min and max values
+void PID::setLimits(int min, int max) {
+  this->minValue = min;
+  this->maxValue = max;
+}
+
+float PID::control(float procOutput); {
+
+  // calculate initial error based on process output
+  e[0] = ref - procOutput;
+  
+  // to do: implement another filter here if necessary
+  //if (e[0] >= -1 && e[0] <= 1) e[0] = 0;  
+   
+  u[0] = u[1] + q0 * e[0] + q1 * e[1] + q2 * e[2];
+  
+  if (u[0] < minvalue) u[0] = minValue;
+  else if (u[0] > maxValue) u[0] = maxValue;
+  
+  // update values
+  u[1] = u[0];
+  e[2] = e[1];
+  e[1] = e[0];
+
+  return u[0];
+}
+
+// get the output control variable
+float PID::getOutputControl() {
+  return u[0];
+}
+
+// if the output needs to be converted before using
+float PID::getMappedOutputControl(int fromLow, int fromHigh, int toLow, int toHigh) {
+  return map(u[0], fromLow, fromHigh, toLow, toHigh);
 }
