@@ -49,7 +49,7 @@ private:
   float u[2]; // controlled value
   float e[3]; // error
 
-  float ref = 0.0;  // reference or setpoint
+  float ref;  // reference or setpoint
 
   int minValue;
   int maxValue;
