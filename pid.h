@@ -55,7 +55,7 @@ private:
   int maxValue;
 
 public:
-  PID (float d, float T, float T0, float ref, enum controllerType ctype);	
+  PID (float d, float T, float T0, float ref, enum controllerType cType);	
   void init();
   void setReference(float ref);
   float getReference();

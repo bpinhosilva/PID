@@ -26,7 +26,7 @@ PID::PID() {
   this->cType = PID; // default is PID
 }
 
-PID::PID (float d, float T, float T0, float ref, enum controllerType ctype) {
+PID::PID (float d, float T, float T0, float ref, enum controllerType cType) {
   this->d     = d;
   this->T     = T;
   this->T0    = T0;
