@@ -20,17 +20,20 @@
 
 #include "pid.h"
 
-// set controller parameters and type: PID 
+// set the controller parameters:
+// d, T, T0, reference and type (_P, _PI or _PID)
+// d and T come from the chart after setting unit step as input to process
+// T0 means the sampling time, the reference is the desired setpoint
 PID mypid (10E-3, 18E-3, 30E-3, 380, _PID);
 
 void setup() {
-  mypid.setLimits(0, 1023);  // set limits from analog read
-  mypid.init();    // initialize controller
-  Serial.begin(9600);  // serial port communication
+  mypid.setLimits(0, 1023);  // set limits for controller
+  mypid.init();              // initialize controller variables
+  Serial.begin(9600);        // configure serial port communication
 }
 
 void loop() {
-  // get input from plant output
+  // send the process variable as input to controller
   float output = mypid.control(analogRead(0));
   Serial.println(output);
   delay(30);

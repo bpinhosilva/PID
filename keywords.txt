@@ -1,0 +1,27 @@
+#######################################
+# Syntax Coloring PID Library
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+PID	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+init	KEYWORD2
+setReference	KEYWORD2
+getReference	KEYWORD2
+setLimits	KEYWORD2
+control	KEYWORD2
+getOutputControl	KEYWORD2
+getMappedOutputControl	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+_P	LITERAL1
+_PI	LITERAL1
+_PID	LITERAL1
