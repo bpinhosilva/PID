@@ -38,17 +38,17 @@ PID::PID (float d, float T, float T0, float ref, enum controllerType cType) {
 void PID::init() {
 
   switch(this->cType) {
-    case P:
+    case _P:
       Kp = T / d;
       Ti = INFINITY;
       Td = 0.0;
       break;
-    case PI:
+    case _PI:
       Kp = 0.9 * T / d;
       Ti = d / 0.3;
       Td = 0.0;
       break;
-    case PID:
+    case _PID:
     default:
       Kp = 1.2 * T / d;
       Ti = 2 * d;
@@ -87,7 +87,7 @@ float PID::control(float procOutput) {
    
   u[0] = u[1] + q0 * e[0] + q1 * e[1] + q2 * e[2];
   
-  if (u[0] < minvalue) u[0] = minValue;
+  if (u[0] < minValue) u[0] = minValue;
   else if (u[0] > maxValue) u[0] = maxValue;
   
   // update values
