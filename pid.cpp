@@ -77,7 +77,7 @@ void PID::setLimits(int min, int max) {
   this->maxValue = max;
 }
 
-float PID::control(float procOutput); {
+float PID::control(float procOutput) {
 
   // calculate initial error based on process output
   e[0] = ref - procOutput;

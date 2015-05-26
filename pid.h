@@ -25,9 +25,9 @@
 
 // controller type to use
 enum controllerType {
-  P,
-  PI,
-  PID
+  _P,
+  _PI,
+  _PID
 };
 
 class PID {
@@ -55,6 +55,7 @@ private:
   int maxValue;
 
 public:
+  PID ();
   PID (float d, float T, float T0, float ref, enum controllerType cType);	
   void init();
   void setReference(float ref);
