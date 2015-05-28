@@ -63,19 +63,19 @@ void PID::init() {
 }
 
 void PID::setDeadTime(float d) {
-	this->d = d;
+  this->d = d;
 }
 
 float PID::getDeadTime() {
-	return this->d;
+  return this->d;
 }
 
 void PID::setResponseTime(float T) {
-	this->T = T;
+  this->T = T;
 }
 
 float PID::getResponseTime() {
-	return this->T;
+  return this->T;
 }
 
 // update the setpoint or reference
